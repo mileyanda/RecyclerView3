@@ -22,6 +22,7 @@ import id.sch.smktelkom_mlg.learn.recyclerview3.model.Hotel;
 
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> {
     ArrayList<Hotel> hotelList;
+
     IHotelAdapter mIHotelAdapter;
 
     public HotelAdapter(Context context, ArrayList<Hotel> hotelList) {
@@ -30,14 +31,14 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HotelAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(HotelAdapter.ViewHolder holder, int position) {
         Hotel hotel = hotelList.get(position);
         holder.tvJudul.setText(hotel.judul);
         holder.tvDeskripsi.setText(hotel.deskripsi);
@@ -65,7 +66,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         ImageView ivFoto;
         TextView tvJudul;
         TextView tvDeskripsi;
@@ -83,33 +83,38 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
             bDelete = (Button) itemView.findViewById(R.id.buttonDelete);
             ibFav = (ImageButton) itemView.findViewById(R.id.buttonFavorite);
             ibShare = (ImageButton) itemView.findViewById(R.id.buttonShare);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     mIHotelAdapter.doClick(getAdapterPosition());
                 }
             });
             bEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     mIHotelAdapter.doEdit(getAdapterPosition());
                 }
             });
             bDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    mIHotelAdapter.doFav(getAdapterPosition());
+                public void onClick(View view) {
+                    mIHotelAdapter.doDelete(getAdapterPosition());
                 }
             });
             ibFav.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
+                    mIHotelAdapter.doFav(getAdapterPosition());
+                }
+            });
+            ibShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     mIHotelAdapter.doShare(getAdapterPosition());
                 }
             });
-            ivFoto = (ImageView) itemView.findViewById(R.id.imageView);
-            tvJudul = (TextView) itemView.findViewById(R.id.textViewJudul);
-            tvDeskripsi = (TextView) itemView.findViewById(R.id.textViewDeskripsi);
         }
+
     }
 }

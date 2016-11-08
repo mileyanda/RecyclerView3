@@ -1,10 +1,10 @@
 package id.sch.smktelkom_mlg.learn.recyclerview3.model;
 
+import java.io.Serializable;
+
 /**
  * Created by yanda on 07/11/2016.
  */
-
-import java.io.Serializable;
 
 public class Hotel implements Serializable {
     public String judul;
@@ -13,7 +13,8 @@ public class Hotel implements Serializable {
     public String lokasi;
     public String foto;
 
-    public Hotel(String judul, String deskripsi, String detail, String lokasi, String foto) {
+    public Hotel(String judul, String deskripsi, String detail, String lokasi,
+                 String foto) {
         this.judul = judul;
         this.deskripsi = deskripsi;
         this.detail = detail;

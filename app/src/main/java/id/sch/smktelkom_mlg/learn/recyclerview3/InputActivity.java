@@ -14,7 +14,8 @@ import android.widget.ImageView;
 import id.sch.smktelkom_mlg.learn.recyclerview3.model.Hotel;
 
 public class InputActivity extends AppCompatActivity {
-    static final int REQUREST_IMAGE_GET = 1;
+
+    static final int REQUEST_IMAGE_GET = 1;
     EditText etJudul;
     EditText etDeskripsi;
     EditText etDetail;
@@ -36,19 +37,17 @@ public class InputActivity extends AppCompatActivity {
 
         ivFoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 pickPhoto();
             }
         });
 
-        findViewById(R.id.buttonSimpan).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        doSave();
-                    }
-                }
-        );
+        findViewById(R.id.buttonSimpan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doSave();
+            }
+        });
 
         hotel = (Hotel) getIntent().getSerializableExtra(MainActivity.HOTEL);
         if (hotel != null) {
@@ -84,30 +83,27 @@ public class InputActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isValid(String judul, String deskripsi, String detail, String lokasi, Uri uriFoto) {
+    private boolean isValid(String judul, String deskripsi, String detail,
+                            String lokasi, Uri uriFoto) {
         boolean valid = true;
         if (judul.isEmpty()) {
             setErrorEmpty(etJudul);
             valid = false;
         }
-
         if (deskripsi.isEmpty()) {
             setErrorEmpty(etDeskripsi);
             valid = false;
         }
-
         if (detail.isEmpty()) {
             setErrorEmpty(etDetail);
             valid = false;
         }
-
         if (lokasi.isEmpty()) {
             setErrorEmpty(etLokasi);
             valid = false;
         }
-
         if (uriFoto == null) {
-            Snackbar.make(ivFoto, "Foto Belum Ada", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(ivFoto, "Foto Belum Ada!", Snackbar.LENGTH_SHORT).show();
             valid = false;
         }
 
@@ -115,7 +111,8 @@ public class InputActivity extends AppCompatActivity {
     }
 
     private void setErrorEmpty(EditText editText) {
-        editText.setError(((TextInputLayout) editText.getParent().getParent()).getHint() + "Belum Diisi");
+        editText.setError(((TextInputLayout) editText.getParent().getParent())
+                .getHint() + "Belum Diisi!");
     }
 
     private void pickPhoto() {
@@ -128,13 +125,13 @@ public class InputActivity extends AppCompatActivity {
         }
         intent.setType("image/*");
         if (intent.resolveActivity(getPackageManager()) != null)
-            startActivityForResult(intent, REQUREST_IMAGE_GET);
+            startActivityForResult(intent, REQUEST_IMAGE_GET);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUREST_IMAGE_GET && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             uriFoto = data.getData();
             ivFoto.setImageURI(uriFoto);
         }
